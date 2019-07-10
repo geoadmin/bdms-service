@@ -19,8 +19,8 @@ define("pg_database", default="bms", help="PostgrSQL database name")
 
 async def get_conn():
     return await asyncpg.create_pool(
-        user='postgres', password='postgres',
-        database=options.pg_database, host=options.pg_host)
+        user=options.pg_user, password=options.pg_password,
+        database=options.pg_database, host=options.pg_host, port=options.pg_port)
 
 if __name__ == "__main__":
 
