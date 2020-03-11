@@ -120,12 +120,12 @@ After a code update you should rebuild and push to [service-bdms dockerhub](http
   docker push swisstopo/service-bdms-nginx:x.x.x
   ```
 ## Cronjob
-Set crontab to run docker-compose at startup, useful for VM fails:
+* Set crontab to run docker-compose at startup, useful for VM fails:
   ```bash
   crontab -e
   ```
-Paste the following script, adjusting the path:
-    ```bash
+* Paste the following script, adjusting the path:
+  ```bash
   @reboot sleep 60 && /usr/local/bin/docker-compose -f </path/docker-compose.yml> up -d
   ```
 
