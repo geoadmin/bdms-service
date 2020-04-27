@@ -21,30 +21,108 @@ ___
   touch docker-compose.yml
   open docker-compose.yml
   ```
-* Paste the following config:
+* Paste the following config if you have a remote/local DB or skip to the next 
+step if you prefer a dockerized dbms:
   ```bash
   version: '2'
   services:
-    nginx-service-bdms:
+    service-bdms-nginx:
+      # build:
+      #   context: ./web-bdms/
+      #   dockerfile: Dockerfile
       image: swisstopo/service-bdms-nginx:1.0.0
+      depends_on:
+        - service-bdms
+      container_name: bdms_service-bdms-nginx
       ports:
         - 80:80
       restart: always
 
     service-bdms:
+      # build:
+      #   context: ./service-bdms/
+      #   dockerfile: Dockerfile
       image: swisstopo/service-bdms:1.0.0
+      container_name: bdms_service-bdms
       restart: always
       command:
       - python
       - bms/main.py
       - --port=80
-      - --pg-host=192.168.0.101
+      - --pg-host=192.168.0.111
       - --pg-database=bdms
       - --pg-user=postgres
       - --pg-password=postgres
   ```
 
+* Paste the following config if you prefer a dockerized dbms:
+  ```bash
+  version: '2'
+  services:
+    service-bdms-db:
+      # build:
+        # context: ./service-bdms/db/
+        # dockerfile: Dockerfile
+      image: swisstopo/service-bdms-db:1.0.0
+      container_name: bdms_service-bdms-db
+      restart: always
+      ports:
+        - 9432:5432
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: bdms
+      # POSTGRES_HOST: bdms_bdms-db
+        TZ: Europe/Zurich
+      volumes:
+        - v-bdms-pgdata:/var/lib/postgresql/data
+
+    service-bdms-nginx:
+      # build:
+      #   context: ./web-bdms/
+      #   dockerfile: Dockerfile
+      image: swisstopo/service-bdms-nginx:1.0.0
+      depends_on:
+        - service-bdms
+        - service-bdms-db
+      container_name: bdms_service-bdms-nginx
+      ports:
+        - 80:80
+      restart: always
+
+    service-bdms:
+      # build:
+      #   context: ./service-bdms/
+      #   dockerfile: Dockerfile
+      image: swisstopo/service-bdms:1.0.0
+      depends_on:
+        - service-bdms-db
+      container_name: bdms_service-bdms
+      restart: always
+      command:
+      - python
+      - bms/main.py
+      - --port=80
+      - --pg-host=bdms_service-bdms-db
+      - --pg-database=bdms
+      - --pg-user=postgres
+      - --pg-password=postgres
+        
+  volumes:
+    v-bdms-pgdata:
+  ```
+
 * Adjust the image version (e.g 1.0.0), the service-bdms database configuration and save 
+
+* Create a .env file 
+  ```bash 
+  nano .env
+  ```
+
+* Paste this configuration and save 
+  ```bash 
+  COMPOSE_PROJECT_NAME=bdms  
+  ```
 
 * Open a terminal and run: 
   ```bash 

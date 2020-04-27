@@ -124,18 +124,26 @@ sudo apt-get install git
 Clone server repository:
 
 ```bash
-git clone https://github.com/geoadmin/service-bdms
+git clone https://github.com/geoadmin/service-bdms.git
 cd service-bdms
 ```
 
 Build Docker image (x.x.x is the release number, start with 1.0.0):
 
 ```bash
- sudo docker build -t swisstopo/bdms:x.x.x ./config
+ sudo docker build -t swisstopo/service-bdms:x.x.x .
 ```
 
 Run Docker container (x.x.x is the release number, start with 1.0.0):
 
+N.B. Run with Docker-compose is preferred, please see docker-compose.yml.
+
 ```bash
-sudo docker run -d --name bdmsContainer -p 80:80 swisstopo/bdms:x.x.x
+sudo docker run -d --name service-bdms swisstopo/service-bdms:x.x.x
+```
+
+Run Docker container with bash in interactive mode (during dev):
+
+```bash
+sudo docker run -it --name service-bdms swisstopo/service-bdms:x.x.x /bin/bash
 ```
