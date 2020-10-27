@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from bms import EDIT
 from bms.v1.action import Action
-from bms.v1.exceptions import NotFound
+from bms.v1.exceptions import (
+    NotFound,
+    DeleteReferenced
+)
 
 
 class DeleteIdentifier(Action):
@@ -20,6 +23,22 @@ class DeleteIdentifier(Action):
 
         if check != 'borehole_identifier':
             raise NotFound()
+
+        # Check if identifier assigned to boreholes
+        check = await self.conn.fetchval("""
+            SELECT EXISTS (
+                SELECT
+                    id_bho_fk
+                FROM
+                    bdms.borehole_codelist
+                WHERE
+                    id_cli_fk = $1
+                LIMIT 1
+            ) as has_bh
+        """, id)
+
+        if check is True:
+            raise DeleteReferenced()    
 
         await self.conn.execute("""
             DELETE FROM bdms.codelist

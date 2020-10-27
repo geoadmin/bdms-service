@@ -20,6 +20,13 @@ SET
 WHERE
   name_cfg = 'GEOLCODES';
 
+UPDATE
+  bdms.config
+SET
+  value_cfg = to_char(now(), 'YYYY-MM-DD"T"HH24:MI:SSOF'))
+WHERE
+  name_cfg = 'PG_UPGRADE';
+
 CREATE TABLE bdms.files (
     id_fil serial,
     id_usr_fk integer,

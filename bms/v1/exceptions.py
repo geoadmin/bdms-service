@@ -12,30 +12,12 @@ class BmsDatabaseException(BmsException):
     def __init__(self, *arg, **args):
         super().__init__(*arg, **args)
 
-
-class DatabaseUpgraded(BmsDatabaseException):
-    def __init__(self, version):
-        super().__init__(
-            f"Database upgraded to latest version (v{version})",
-            'E-011'
-        )
-
-
-class DatabaseAlreadyUpgraded(BmsDatabaseException):
-    def __init__(self, version):
-        super().__init__(
-            f"Database already upgraded to latest version (v{version})",
-            'E-011'
-        )
-
-
 class DatabaseVersionMissmatch(BmsDatabaseException):
     def __init__(self, source_version, database_version):
         super().__init__(
-            f"Database version (v{database_version}) missmatch source (v{source_version})",
+            f"Database version (v{database_version}) missmatch. service-bdms requires (v{source_version})",
             'E-010'
         )
-
 
 class ActionWrong(BmsException):
     def __init__(self):
@@ -85,6 +67,12 @@ class MissingParameter(BmsException):
 class WrongParameter(BmsException):
     def __init__(self, parameter):
         super().__init__(f"Wrong parameter {parameter}", 'E-204')
+
+
+# Raised when trying to delete row from a referecnced table
+class DeleteReferenced(BmsException):
+    def __init__(self):
+        super().__init__("Foreign key constraint violation", 'E-205')
 
 
 class Locked(BmsException):

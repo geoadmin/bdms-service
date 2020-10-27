@@ -38,6 +38,32 @@ CREATE TABLE bdms.terms
     PRIMARY KEY (id_tes)
 );
 
+CREATE TABLE bdms.contents (
+    id_cnt serial,
+    name_cnt character varying NOT NULL,
+    draft_cnt boolean NOT NULL DEFAULT true,
+
+    title_cnt_en character varying,
+    text_cnt_en character varying,
+
+    title_cnt_de character varying,
+    text_cnt_de character varying,
+
+    title_cnt_fr character varying,
+    text_cnt_fr character varying,
+
+    title_cnt_it character varying,
+    text_cnt_it character varying,
+
+    title_cnt_ro character varying,
+    text_cnt_ro character varying,
+
+    creation_cnt timestamp with time zone  DEFAULT now(),
+    expired_cnt timestamp with time zone,
+
+    PRIMARY KEY (id_cnt)
+);
+
 CREATE TABLE bdms.cantons
 (
     gid serial NOT NULL,

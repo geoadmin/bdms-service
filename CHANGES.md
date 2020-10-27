@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.2
+
+### New features
+
+
+ - **Borehole identifiers multilanguage**
+
+    - Identifiers can be created and modified in each supported language.
+
+ - **Text content management**
+
+    - This feature is developed to handle multilanguage text (title and body) contents. Currently this feature is used to manage the text displayed in the login screen of web-bdms. (some default text is added in the databse)
+
+ - **Handling database update process on upgrade**
+
+    - The service will check the current version of the database and apply the required changes automatically if the 
+
 ## 1.0.1
 
 ### New features

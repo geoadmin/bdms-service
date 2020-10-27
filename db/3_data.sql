@@ -4,7 +4,7 @@ INSERT INTO bdms.config(
     name_cfg, value_cfg
 )
 VALUES
-    ('VERSION', '1.0.1'),
+    ('VERSION', '1.0.2'),
     ('PREVIOUS', NULL),
     ('GEOLCODES', '1.0.0'),
     ('INSTALLATION', to_char(now(), 'YYYY-MM-DD"T"HH24:MI:SSOF')),
@@ -94,3 +94,36 @@ VALUES
 (4, 3, 1),
 (5, 4, 1);
 
+
+INSERT INTO bdms.contents(
+	name_cnt,
+	draft_cnt,
+    
+    title_cnt_en,
+    text_cnt_en,
+    
+    title_cnt_de,
+    text_cnt_de,
+    
+    title_cnt_fr,
+    text_cnt_fr,
+    
+    title_cnt_it,
+    text_cnt_it
+
+) VALUES (
+    'login',
+    FALSE,
+    
+    'Welcome to swissforage.ch',
+    'A platform to acquire borehole data according to the Borehole data model defined by the Swiss Geological Survey at swisstopo ([more](https://geoservice.ist.supsi.ch/docs/bdms)).',
+    
+    'Willkommen bei swissforage.ch',
+    'Eine Plattform zur Erfassung von Bohrlochdaten nach dem von der Schweizerischen Landesgeologie bei swisstopo definierten Bohrlochdatenmodell ([mehr](https://geoservice.ist.supsi.ch/docs/bdms)).',
+    
+    'Bienvenue sur swissforage.ch',
+    'Une plate-forme pour l''acquisition de données de forage selon le modèle de données de forage défini par le Service géologique suisse à swisstopo ([en savoir plus](https://geoservice.ist.supsi.ch/docs/bdms)).',
+    
+    'Benvenuti su swissforage.ch',
+    'Una piattaforma per l''acquisizione di dati di trivellazione secondo il modello di dati di trivellazione definito dal Servizio geologico nazionale di swisstopo ([altro](https://geoservice.ist.supsi.ch/docs/bdms)).'
+);
